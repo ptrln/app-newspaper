@@ -11,18 +11,23 @@
   <br>
   <%= f.label :subscription_plans %>
   <ul>
-  <% SubscriptionPlan.all.each do |plan| %>
-  <label>
-  <%= check_box_tag(
-    "user[subscription_plan_ids][]",
-    plan.id,
-    @user.subscription_plan_ids.include?(plan.id),
-    id: "subscription_plan_#{plan.id}"
-  ) %>
-  <%= plan.newspaper.title %> - <%= plan.frequency %> $<%= plan.price %>
-  </label>
-  <br>
+
+  <% Newspaper.includes(:subscription_plans).all.each do |paper| %>
+    <%= paper.title %>
+    <select name="user[subscription_plan_ids][]">
+      <option value="">Not Subscribed</option>
+    <% paper.subscription_plans.each do |plan| %>
+      <% if @user.subscription_plan_ids.include?(plan.id) %>
+      <option value='<%= plan.id %>' selected>
+      <% else %>
+      <option value='<%= plan.id %>'>
+      <% end %>
+      <%= "#{plan.frequency} - $#{number_to_currency(plan.price) }" %></option>
+    <% end %>
+    </select>
+    <br>
   <% end %>
+  <br>
   <%= hidden_field_tag "user[subscription_plan_ids][]" %>
   </ul>
   <br>

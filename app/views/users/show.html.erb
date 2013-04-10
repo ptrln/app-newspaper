@@ -8,13 +8,18 @@
 </legend>
 email: <%= @user.email %>
 
-<h3>Subscriptions</h3>
+<h3>
+  Subscriptions
+  <small>
+    <%= link_to "edit", edit_user_path(@user) %>
+  </small>
+</h3>
 <% if @user.subscription_plans.empty? %>
   none
 <% else %>
   <% @user.subscription_plans.each do |plan| %>
     <p>
-      <%= link_to "#{plan.newspaper.title} - #{plan.frequency} $#{plan.price}", 
+      <%= link_to "#{plan.newspaper.title} - #{plan.frequency} #{number_to_currency(plan.price) }", 
         newspaper_url(plan.newspaper) %>
     </p>
   <% end %>

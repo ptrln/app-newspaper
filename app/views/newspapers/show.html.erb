@@ -18,7 +18,7 @@
 </h3>
   <% @newspaper.subscription_plans.each do |plan| %>
     <p>
-      <%= plan.frequency %>, $<%= plan.price %>
+      <%= plan.frequency %>, <%= number_to_currency(plan.price) %>
       <small>
         <%= link_to "edit", edit_newspaper_subscription_plan_url(@newspaper, plan) %>
       </small>
