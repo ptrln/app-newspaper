@@ -7,8 +7,30 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
-<%= yield %>
-
+  <div class='container' style='margin-top: 10px;'>
+    <div class='row'>
+      <center>
+      <span>
+        <%= link_to "newspapers", newspapers_url %> 
+        | 
+        <% if signed_in? %>
+        logged in as <%= current_user.name %>
+        |
+        <%= link_to "logout", session_url, method: :delete %>
+        <% else %>
+        <%= link_to "login", new_session_url %>
+        |
+        <%= link_to "sign up", new_user_url %>
+        <% end %>
+      </span>
+      </center>
+    </div>
+    <% flash.each do |type, message| %>
+    <div class="alert alert-#{type}">
+      <%= message %>
+    </div>
+    <% end %>
+    <%= yield %>
+  </div>
 </body>
 </html>

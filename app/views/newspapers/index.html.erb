@@ -1,0 +1,15 @@
+<h1>
+  Newspapers#index
+  <small>
+    <%= link_to "add", new_newspaper_url %>
+  </small>
+</h1>
+<ul>
+<% @newspapers.each do |paper| %>
+  <li>
+    <h3>
+      <%= link_to paper.title, newspaper_url(paper) %> by <%= paper.editor.name %>
+    </h3>
+  </li>
+<% end %>
+</ul>

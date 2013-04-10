@@ -1,0 +1,38 @@
+<h1>Newspapers#show</h1>
+<h2>
+  <%= @newspaper.title %>
+  <small>
+    <%= link_to "edit", edit_newspaper_url(@newspaper) %>
+  </small>
+</h2>
+
+<h3>Editor</h3>
+  <p><%= link_to @newspaper.editor.name, user_path(@newspaper.editor) %></p>
+
+
+<h3>
+  Subscription Plans
+  <small>
+    <%= link_to "add", new_newspaper_subscription_plan_url(@newspaper) %>
+  </small>
+</h3>
+  <% @newspaper.subscription_plans.each do |plan| %>
+    <p>
+      <%= plan.frequency %>, $<%= plan.price %>
+      <small>
+        <%= link_to "edit", edit_newspaper_subscription_plan_url(@newspaper, plan) %>
+      </small>
+    </p>
+  <% end %>
+
+
+<h3>Subscribers</h3>
+  <% if @newspaper.subscribers.empty? %>
+    none
+  <% else %>
+    <% @newspaper.subscribers.each do |sub| %>
+      <p>
+        <%= link_to sub.name, user_path(sub) %>, <%= sub.email %>
+      </p>
+    <% end %>
+  <% end %>

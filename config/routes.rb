@@ -1,4 +1,12 @@
 AppNewspaper::Application.routes.draw do
+
+  resources :users, only: [:new, :create, :edit, :update, :show]
+  resources :newspapers, only: [:index, :new, :create, :edit, :update, :show] do
+    resources :subscription_plans, only: [:new, :create, :edit, :update]
+  end
+  resource :session, only: [:new, :create, :destroy]
+
+  root to: "newspapers#index"
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

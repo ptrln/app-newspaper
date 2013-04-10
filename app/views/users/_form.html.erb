@@ -1,0 +1,31 @@
+<%= form_for(@user) do |f| %>
+  <%= render 'shared/error_messages', object: @user %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <br>
+  <%= f.label :email %>
+  <%= f.text_field :email %>
+  <br>
+  <%= f.label :password %>
+  <%= f.password_field :password %>
+  <br>
+  <%= f.label :subscription_plans %>
+  <ul>
+  <% SubscriptionPlan.all.each do |plan| %>
+  <label>
+  <%= check_box_tag(
+    "user[subscription_plan_ids][]",
+    plan.id,
+    @user.subscription_plan_ids.include?(plan.id),
+    id: "subscription_plan_#{plan.id}"
+  ) %>
+  <%= plan.newspaper.title %> - <%= plan.frequency %> $<%= plan.price %>
+  </label>
+  <br>
+  <% end %>
+  <%= hidden_field_tag "user[subscription_plan_ids][]" %>
+  </ul>
+  <br>
+  <%= f.submit class: "btn" %>
+  <%= link_to "Cancel", :back, class: "btn" %>
+<% end %>

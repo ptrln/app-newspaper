@@ -1,0 +1,26 @@
+<%= form_for(@newspaper) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <%= f.label :title %>
+  <%= f.text_field :title %>
+  <br>
+  <%= f.label :editor %>
+  <%= f.collection_select(
+    :editor_id,
+    User.all,
+    :id,
+    :name
+  ) %>
+  <% if @new_newspaper %>
+  <br>
+  <h4>Subscription Plans</h4>
+  <ul>
+  <%= f.fields_for(:subscription_plans) do |spf| %>
+    <%= render :partial => "/subscription_plans/inner_form", 
+      :locals => { :f => spf, :plan => spf.object } %>
+    <br>
+  <% end %>
+  </ul>
+  <% end %>
+  <%= f.submit class: "btn" %>
+  <%= link_to "Cancel", :back, class: "btn" %>
+<% end %>

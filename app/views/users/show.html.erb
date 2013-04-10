@@ -1,0 +1,33 @@
+<legend>
+  <h1>
+    <%= @user.name %>
+    <small>
+      <%= link_to "edit", edit_user_path(@user) %>
+    </small>
+  </h1>
+</legend>
+email: <%= @user.email %>
+
+<h3>Subscriptions</h3>
+<% if @user.subscription_plans.empty? %>
+  none
+<% else %>
+  <% @user.subscription_plans.each do |plan| %>
+    <p>
+      <%= link_to "#{plan.newspaper.title} - #{plan.frequency} $#{plan.price}", 
+        newspaper_url(plan.newspaper) %>
+    </p>
+  <% end %>
+<% end %>
+
+<h3>Editor</h3>
+<% if @user.editor? %>
+<% @user.newspapers.each do |paper| %>
+  <p>
+    <%= link_to paper.title, newspaper_url(paper) %>
+  </p>
+<% end %>
+<% else %>
+not an editor
+<% end %>
+

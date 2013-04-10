@@ -1,0 +1,11 @@
+<%= f.label :price %>
+<%= f.text_field :price, placeholder: "1.99" %>
+<br>
+<%= f.label :is_daily, "Frequency" %>
+<% [true, false].each do |daily| %>
+<label>
+  <%= f.radio_button :is_daily, daily, :checked => daily == plan.is_daily %>  
+  <%= daily ? "Daily" : "Weekly" %>
+</label>
+<% end %>
+<br>
